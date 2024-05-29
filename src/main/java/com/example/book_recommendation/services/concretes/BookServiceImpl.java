@@ -113,4 +113,14 @@ public class BookServiceImpl implements BookService {
                 .map(BookMapper.INSTANCE::bookToBookDTO)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<String> getAllLanguages() {
+        return bookRepository.findDistinctLanguages();
+    }
+
+    @Override
+    public List<String> getAllGenres() {
+        return bookRepository.findDistinctGenres();
+    }
 }

@@ -86,4 +86,17 @@ public class BookController {
         List<BookResponse> books = bookService.getBooksByFilters(bookRequest);
         return ResponseEntity.ok(books);
     }
+
+    @GetMapping("/languages")
+    public ResponseEntity<List<String>> getAllLanguages() {
+        List<String> languages = bookService.getAllLanguages();
+        return ResponseEntity.ok(languages);
+    }
+
+    @GetMapping("/genres")
+    public ResponseEntity<List<String>> getAllGenres() {
+        List<String> genres = bookService.getAllGenres();
+        return ResponseEntity.ok(genres);
+    }
+
 }

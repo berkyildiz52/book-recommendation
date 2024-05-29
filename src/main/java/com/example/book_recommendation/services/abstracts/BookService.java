@@ -30,5 +30,7 @@ public interface BookService {
 
     public List<BookResponse> getBooksByFilters(BookRequest bookRequest);
 
+    List<String> getAllLanguages();
 
+    List<String> getAllGenres();
 }

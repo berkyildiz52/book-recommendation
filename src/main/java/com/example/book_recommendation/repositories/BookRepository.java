@@ -44,4 +44,10 @@ public interface BookRepository extends JpaRepository<Book, Long> {
             "(:#{#request.title} IS NULL OR LOWER(b.title) LIKE LOWER(CONCAT('%', :#{#request.title}, '%')))")
     List<Book> findBooksByFilters(@Param("request") BookRequest request);
 
+    @Query("SELECT DISTINCT b.language FROM Book b")
+    List<String> findDistinctLanguages();
+
+    @Query("SELECT DISTINCT b.genre FROM Book b")
+    List<String> findDistinctGenres();
+
 }
