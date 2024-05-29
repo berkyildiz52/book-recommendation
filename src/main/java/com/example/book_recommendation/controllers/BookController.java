@@ -3,6 +3,7 @@ package com.example.book_recommendation.controllers;
 import com.example.book_recommendation.services.abstracts.BookService;
 import com.example.book_recommendation.services.dtos.requests.BookRequest;
 import com.example.book_recommendation.services.dtos.responses.BookResponse;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -82,7 +83,7 @@ public class BookController {
     }
 
     @PostMapping("/filter")
-    public ResponseEntity<List<BookResponse>> getBooksByFilters(@RequestBody BookRequest bookRequest) {
+    public ResponseEntity<List<BookResponse>> getBooksByFilters(@RequestBody @Valid BookRequest bookRequest) {
         List<BookResponse> books = bookService.getBooksByFilters(bookRequest);
         return ResponseEntity.ok(books);
     }
