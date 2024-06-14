@@ -1,5 +1,6 @@
 package com.example.book_recommendation.core.exceptions;
 
+import com.example.book_recommendation.core.exceptions.types.BusinessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -27,5 +28,11 @@ public class GlobalExceptionHandler
             errors.put(error.getField(), error.getDefaultMessage());
         }
         return errors;
+    }
+    @ExceptionHandler({BusinessException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String handleBusinessException(BusinessException exception)
+    {
+        return exception.getMessage();
     }
 }

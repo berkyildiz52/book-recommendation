@@ -1,5 +1,8 @@
 package com.example.book_recommendation.services.concretes;
 
+import com.example.book_recommendation.core.exceptions.types.BusinessException;
+import com.example.book_recommendation.core.services.abstracts.MessageService;
+import com.example.book_recommendation.core.services.constants.Messages;
 import com.example.book_recommendation.entities.Book;
 import com.example.book_recommendation.repositories.BookRepository;
 import com.example.book_recommendation.services.abstracts.BookService;
@@ -17,6 +20,7 @@ import java.util.stream.Collectors;
 public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
+    private final MessageService messageService;
 
     @Override
     public List<BookResponse> getAll() {
@@ -44,6 +48,9 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookResponse> getBooksByRatingGreaterThan(double rating) {
+        if(!ratingRange(rating)){
+            throw new BusinessException(messageService.getMessageWithArgs(Messages.BusinessErrors.VALIDATION_RATING_ERROR));
+        }
         List<Book> books = bookRepository.findByRatingGreaterThanEqual(rating);
         return books.stream()
                 .map(BookMapper.INSTANCE::bookToBookDTO)
@@ -52,6 +59,9 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookResponse> getBooksByRatingLessThan(double rating) {
+        if(!ratingRange(rating)){
+            throw new BusinessException(messageService.getMessageWithArgs(Messages.BusinessErrors.VALIDATION_RATING_ERROR));
+        }
         List<Book> books = bookRepository.findByRatingLessThanEqual(rating);
         return books.stream()
                 .map(BookMapper.INSTANCE::bookToBookDTO)
@@ -122,5 +132,9 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<String> getAllGenres() {
         return bookRepository.findDistinctGenres();
+    }
+
+    private boolean ratingRange(double rating){
+        return rating < 5 && rating > 0;
     }
 }

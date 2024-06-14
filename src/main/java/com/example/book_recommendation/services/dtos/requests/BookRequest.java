@@ -1,5 +1,6 @@
 package com.example.book_recommendation.services.dtos.requests;
 
+import com.example.book_recommendation.core.services.constants.Messages;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
@@ -14,9 +15,11 @@ import lombok.Setter;
 public class BookRequest {
     private String genre;
     private String language;
-    @Min(value = 0, message = "Rating must be at least 0")
+    @Min(value = 0, message = Messages.ValidationErrors.VALIDATION_RATING_MIN_ERROR)
+    @Max(value = 5, message = Messages.ValidationErrors.VALIDATION_RATING_MAX_ERROR)
     private Double minRating;
-    @Max(value = 5, message = "Rating must be at most 5")
+    @Min(value = 0, message = Messages.ValidationErrors.VALIDATION_RATING_MIN_ERROR)
+    @Max(value = 5, message = Messages.ValidationErrors.VALIDATION_RATING_MAX_ERROR)
     private Double maxRating;
     private Integer minLength;
     private Integer maxLength;
